@@ -1,7 +1,5 @@
-import { combineReducers } from "redux";
-
-import { CounterActionT } from "./actionCreators";
-import { INCREASE, DECREASE, RESET } from './actionTypes';
+import { CounterActionT } from "../actionCreators/counter";
+import { INCREASE, DECREASE, RESET } from '../actionTypes/counter';
 
 const defaultState: number = 0;
 
@@ -21,9 +19,4 @@ const counterReducer = (state = defaultState, action: CounterActionT) => {
   return state;
 };
 
-export const rootReducer = combineReducers({
-  count: counterReducer
-  // add other reducers here
-});
-
-export type StoreT = NonNullable<Parameters<typeof rootReducer>[0]>;
+export default counterReducer;

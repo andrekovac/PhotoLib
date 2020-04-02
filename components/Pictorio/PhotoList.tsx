@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch } from "react";
 import { StyleSheet, FlatList } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchPhotos, PhotosActionT } from "../../store/actionCreators/photos";
 
 import Item from "./Item";
+import { StoreT } from "../../store/reducer";
 
 interface ItemT {
   id?: string;
@@ -9,29 +13,16 @@ interface ItemT {
   download_url: string;
 }
 
-// // Alternative:
-// fetch('https://picsum.photos/v2/list?page=1&limit=100')
-//   .then(response => response.json())
-//   .then(data => setData(data));
-
 const Pictorio = () => {
-  const [data, setData] = useState([]);
-
-  const fetchData = async () => {
-    const response = await fetch(
-      "https://picsum.photos/v2/list?page=1&limit=100"
-    );
-    const data = await response.json();
-    setData(data);
-  };
+  const dispatch = useDispatch<Dispatch<PhotosActionT>>();
 
   useEffect(() => {
-    fetchData();
+    dispatch(fetchPhotos())
   }, []);
 
   return (
     <FlatList
-      data={data}
+      data={useSelector<StoreT, ReadonlyArray<ItemT>>(state => state.photos)}
       renderItem={({ item }: { item: ItemT }) => (
         <Item author={item.author} download_url={item.download_url} />
       )}
