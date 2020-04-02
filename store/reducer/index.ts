@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import counterReducer from './counter';
-import photosReducer from './photos';
+import counterReducer from "./counter";
+import photosReducer from "./photos";
 
 export const rootReducer = combineReducers({
   count: counterReducer,

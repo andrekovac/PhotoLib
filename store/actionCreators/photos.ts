@@ -1,11 +1,17 @@
 import { ItemT } from "../../components/Pictorio/Item";
 
-import { ADD_PHOTOS } from "../actionTypes/photos";
+import { ADD_PHOTOS, TOGGLE_FAVORITE } from "../actionTypes/photos";
 import { ThunkResult } from "./index";
 
 export type PhotosActionT = {
   type: typeof ADD_PHOTOS;
   photos: ReadonlyArray<ItemT>;
+};
+
+
+export type FavoriteActionT = {
+  type: typeof TOGGLE_FAVORITE;
+  id: string;
 };
 
 // // Alternative:
@@ -31,3 +37,10 @@ export const fetchPhotos = (): ThunkResult<void> => {
     fetchData().then(photos => dispatch(addPhotos(photos)));
   };
 };
+
+export const toggleFavorite = (id: string) => {
+  return {
+    type: TOGGLE_FAVORITE,
+    id
+  }
+}
