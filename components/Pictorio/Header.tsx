@@ -6,7 +6,7 @@ const Header = () => {
   return (
       <SafeAreaView>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Photos</Text>
+          <Text style={styles.headerText}>All Photos</Text>
         </View>
       </SafeAreaView>
   );
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: "center",
     // paddingTop: Constants.statusBarHeight,
-    backgroundColor: 'blue',
+    backgroundColor: '#74e685',
   },
   headerText: {
     fontSize: 22

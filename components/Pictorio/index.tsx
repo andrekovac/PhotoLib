@@ -4,6 +4,9 @@ import { StyleSheet, View } from "react-native";
 import Header from "./Header";
 import PhotoList from "./PhotoList";
 
+/**
+ * Fetch and display random photos
+ */
 const Pictorio = () => {
   const [data, setData] = useState([]);
 

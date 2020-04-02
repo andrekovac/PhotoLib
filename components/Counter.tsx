@@ -43,7 +43,7 @@ const Container = styled.View`
 `;
 
 const Button = styled.TouchableOpacity`
-  background-color: yellowgreen;
+  background-color: #74e685;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
