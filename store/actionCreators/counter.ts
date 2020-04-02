@@ -1,11 +1,7 @@
-import { INCREASE, DECREASE, RESET } from './actionTypes';
+import { INCREASE, DECREASE, RESET } from '../actionTypes/counter';
 
 export type CounterActionT = {
     type: typeof INCREASE | typeof DECREASE | typeof RESET,
-}
-
-export type DecreaseActionT = {
-    type: typeof DECREASE;
 }
 
 export const increase = (): CounterActionT => {
