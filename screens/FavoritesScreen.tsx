@@ -1,10 +1,10 @@
 import * as React from "react";
 import Pictorio from "../components/Pictorio";
 
-export default function HomeScreen() {
+export default function FavoritesScreen() {
   return <Pictorio />;
 }
 
-HomeScreen.navigationOptions = {
+FavoritesScreen.navigationOptions = {
   header: null
 };
