@@ -1,5 +1,5 @@
-import React, { useEffect, Dispatch } from "react";
-import { FlatList } from "react-native";
+import React, { useEffect, useState, Dispatch } from "react";
+import { StyleSheet, FlatList } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 
 import Item, { ItemT } from "./Item";
@@ -7,7 +7,7 @@ import Item, { ItemT } from "./Item";
 import { fetchPhotos, PhotosActionT } from "../../store/actionCreators/photos";
 import { StoreT } from "../../store/reducer";
 
-const Pictorio = () => {
+const PhotoList = () => {
   const dispatch = useDispatch<Dispatch<PhotosActionT>>();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const Pictorio = () => {
   );
 };
 
-export default Pictorio;
+export default PhotoList;
