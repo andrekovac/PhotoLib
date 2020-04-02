@@ -2,7 +2,7 @@ import React, { useEffect, useState, Dispatch } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchPhotos, PhotosActionT } from "../../store/actionCreators/photos";
+import { fetchPhotos, PhotosActionT, fetchStart } from "../../store/actionCreators/photos";
 
 import Item from "./Item";
 import { StoreT } from "../../store/reducer";
@@ -17,7 +17,10 @@ const Pictorio = () => {
   const dispatch = useDispatch<Dispatch<PhotosActionT>>();
 
   useEffect(() => {
-    dispatch(fetchPhotos())
+    // Uncomment next line when using redux-thunk
+    // dispatch(fetchPhotos())
+    // Uncomment next line when using redux-saga
+    dispatch(fetchStart())
   }, []);
 
   return (

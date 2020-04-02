@@ -1,11 +1,27 @@
 import { ItemT } from "../../components/Pictorio/Item";
 
-import { ADD_PHOTOS } from "../actionTypes/photos";
+import { ADD_PHOTOS, FETCH_START, FETCH_ERROR } from "../actionTypes/photos";
 import { ThunkResult } from "./index";
 
-export type PhotosActionT = {
-  type: typeof ADD_PHOTOS;
-  photos: ReadonlyArray<ItemT>;
+export type PhotosActionT =
+  | {
+      type: typeof ADD_PHOTOS;
+      photos: ReadonlyArray<ItemT>;
+    }
+  | { type: typeof FETCH_START }
+  | { type: typeof FETCH_ERROR; error: Error };
+
+export const fetchStart = (): PhotosActionT => {
+  return {
+    type: FETCH_START
+  };
+};
+
+export const fetchError = (error: Error): PhotosActionT => {
+  return {
+    type: FETCH_ERROR,
+    error
+  };
 };
 
 // // Alternative:
@@ -19,7 +35,7 @@ const fetchData = async (): Promise<ReadonlyArray<ItemT>> => {
   return response.json();
 };
 
-const addPhotos = (photos: ReadonlyArray<ItemT>): PhotosActionT => {
+export const addPhotos = (photos: ReadonlyArray<ItemT>): PhotosActionT => {
   return {
     type: ADD_PHOTOS,
     photos
@@ -28,6 +44,11 @@ const addPhotos = (photos: ReadonlyArray<ItemT>): PhotosActionT => {
 
 export const fetchPhotos = (): ThunkResult<void> => {
   return dispatch => {
-    fetchData().then(photos => dispatch(addPhotos(photos)));
+    Promise.resolve()
+      // Uncomment next line when using thunks
+      // .then(() => dispatch(fetchStart()))
+      .then(fetchData)
+      .then(photos => dispatch(addPhotos(photos)))
+      .catch(error => dispatch(fetchError(error)));
   };
 };
