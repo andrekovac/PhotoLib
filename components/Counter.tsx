@@ -8,7 +8,7 @@ import {
   increase as increaseAction,
   decrease as decreaseAction,
   reset as resetAction
-} from "../store/actionCreators";
+} from "../store/actionCreators/counter";
 import { StoreT } from "../store/reducer";
 
 const Counter = () => {
