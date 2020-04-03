@@ -8,20 +8,6 @@ import PhotoList from "./PhotoList";
  * Fetch and display random photos
  */
 const Pictorio = () => {
-  const [data, setData] = useState([]);
-
-  const fetchData = async () => {
-    const response = await fetch(
-      "https://picsum.photos/v2/list?page=1&limit=100"
-    );
-    const data = await response.json();
-    setData(data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <View style={styles.container}>
       <Header />

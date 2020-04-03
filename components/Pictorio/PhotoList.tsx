@@ -13,7 +13,7 @@ interface ItemT {
   download_url: string;
 }
 
-const Pictorio = () => {
+const PhotoList = () => {
   const dispatch = useDispatch<Dispatch<PhotosActionT>>();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Pictorio = () => {
   );
 };
 
-export default Pictorio;
+export default PhotoList;
 
 const styles = StyleSheet.create({
   container: {

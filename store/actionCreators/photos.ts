@@ -46,7 +46,7 @@ export const fetchPhotos = (): ThunkResult<void> => {
   return dispatch => {
     Promise.resolve()
       // Uncomment next line when using thunks
-      // .then(() => dispatch(fetchStart()))
+      .then(() => dispatch(fetchStart()))
       .then(fetchData)
       .then(photos => dispatch(addPhotos(photos)))
       .catch(error => dispatch(fetchError(error)));
