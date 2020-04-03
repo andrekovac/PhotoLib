@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { FlatList } from "react-native";
 
-import Item from "./Item";
-
-interface ItemT {
-  id?: string;
-  author: string;
-  download_url: string;
-}
+import Item, { ItemT } from "./Item";
 
 // // Alternative:
 // fetch('https://picsum.photos/v2/list?page=1&limit=100')
@@ -41,23 +35,3 @@ const Pictorio = () => {
 };
 
 export default Pictorio;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff"
-  },
-  header: {
-    paddingVertical: 10,
-    alignItems: "center"
-  },
-  headerText: {
-    fontSize: 22
-  },
-  item: {
-    marginVertical: 8,
-    marginHorizontal: 16
-  },
-  title: {
-    fontSize: 32
-  }
-});
