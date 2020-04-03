@@ -1,8 +1,8 @@
 import * as React from "react";
-import Pictorio from "../components/Pictorio";
+import Favorites from '../components/Pictorio/Favorites';
 
 export default function FavoritesScreen() {
-  return <Pictorio />;
+  return <Favorites />;
 }
 
 FavoritesScreen.navigationOptions = {

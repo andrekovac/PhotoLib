@@ -1,28 +1,27 @@
-import React, { useEffect, Dispatch } from "react";
+import React from "react";
 import { FlatList } from "react-native";
-import { useDispatch, useSelector } from 'react-redux';
 
 import Item, { ItemT } from "./Item";
 
-import { fetchPhotos, PhotosActionT } from "../../store/actionCreators/photos";
-import { StoreT } from "../../store/reducer";
+interface PropsT {
+  data: ReadonlyArray<any>,
+}
 
-const Pictorio = () => {
-  const dispatch = useDispatch<Dispatch<PhotosActionT>>();
-
-  useEffect(() => {
-    dispatch(fetchPhotos())
-  }, []);
-
+const PhotoList = ({ data }: PropsT) => {
   return (
     <FlatList
-      data={useSelector<StoreT, ReadonlyArray<ItemT>>(state => state.photos)}
+      data={data}
       renderItem={({ item }: { item: ItemT }) => (
-        <Item author={item.author} download_url={item.download_url} />
+        <Item
+          id={item.id}
+          author={item.author}
+          download_url={item.download_url}
+          isFavorite={item.isFavorite}
+        />
       )}
       keyExtractor={(item: ItemT, key) => item.id || key.toString()}
     />
   );
 };
 
-export default Pictorio;
+export default PhotoList;
