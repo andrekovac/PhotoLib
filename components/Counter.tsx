@@ -1,20 +1,18 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch } from "react";
 import { Text } from "react-native";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/native";
 
-import { IncreaseActionT,
+import {
+  IncreaseActionT,
   increase as increaseAction,
-  decrease as decreaseAction,
-  DecreaseActionT,
 } from "../store/actionCreators";
 import { StoreT } from "../store/reducer";
 
 const Counter = () => {
-  const dispatch = useDispatch<Dispatch<IncreaseActionT | DecreaseActionT>>();
+  const dispatch = useDispatch<Dispatch<IncreaseActionT>>();
 
   const increase = () => dispatch(increaseAction());
-  const decrease = () => dispatch(decreaseAction());
 
   const count = useSelector<StoreT, number>((state) => state.count);
 
@@ -23,9 +21,6 @@ const Counter = () => {
       <Text>Clicked {count} times</Text>
       <Button onPress={increase}>
         <Text>Increment</Text>
-      </Button>
-      <Button onPress={decrease}>
-        <Text>Decrement</Text>
       </Button>
     </Container>
   );
@@ -44,10 +39,3 @@ const Button = styled.TouchableOpacity`
 `;
 
 export default Counter;
-
-
-
-
-
-
-
