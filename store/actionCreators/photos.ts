@@ -24,13 +24,9 @@ export const fetchError = (error: Error): PhotosActionT => {
   };
 };
 
-// // Alternative:
-// fetch('https://picsum.photos/v2/list?page=1&limit=100')
-//   .then(response => response.json())
-//   .then(data => setData(data));
 const fetchData = async (): Promise<ReadonlyArray<ItemT>> => {
   const response = await fetch(
-    "https://picsum.photos/v2/list?page=1&limit=100"
+    "https://picsum.photos/v2/list?page=3&limit=100"
   );
   return response.json();
 };
@@ -46,7 +42,7 @@ export const fetchPhotos = (): ThunkResult<void> => {
   return dispatch => {
     Promise.resolve()
       // Uncomment next line when using thunks
-      .then(() => dispatch(fetchStart()))
+      // .then(() => dispatch(fetchStart()))
       .then(fetchData)
       .then(photos => dispatch(addPhotos(photos)))
       .catch(error => dispatch(fetchError(error)));
