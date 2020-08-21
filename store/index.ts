@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore } from "redux";
+import { applyMiddleware, createStore, compose } from "redux";
 import thunkMiddleware, { ThunkMiddleware } from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
 
@@ -23,8 +23,10 @@ const middlewares = [
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(...middlewares),
-  devtools()
+  compose(
+    applyMiddleware(...middlewares),
+    devtools()
+  )
 );
 
 // then run the saga
