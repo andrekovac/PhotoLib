@@ -24,7 +24,7 @@ const fetchData = async (): Promise<ReadonlyArray<ItemT>> => {
 const addPhotos = (photos: ReadonlyArray<ItemT>): PhotosActionT => {
   return {
     type: ADD_PHOTOS,
-    photos
+    photos,
   };
 };
 
