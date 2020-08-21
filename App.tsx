@@ -12,13 +12,23 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 import store from "./store";
 
+import { CounterContext } from "./context";
+
 const Stack = createStackNavigator();
 
 export default function App(props) {
+  const [count, setCount] = React.useState(0);
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
+
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
+
+  const counter = {
+    count: count,
+    increase: () => { setCount(prevCount => prevCount + 1) },
+    decrease: () => { if (count > 0) setCount(prevCount => prevCount - 1) },
+  };
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
@@ -32,7 +42,7 @@ export default function App(props) {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
+          "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -53,14 +63,16 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
         <Provider store={store}>
-          <NavigationContainer
-            ref={containerRef}
-            initialState={initialNavigationState}
-          >
-            <Stack.Navigator>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
-            </Stack.Navigator>
-          </NavigationContainer>
+          <CounterContext.Provider value={counter}>
+            <NavigationContainer
+              ref={containerRef}
+              initialState={initialNavigationState}
+            >
+              <Stack.Navigator>
+                <Stack.Screen name="Root" component={BottomTabNavigator} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </CounterContext.Provider>
         </Provider>
       </View>
     );
@@ -70,6 +82,6 @@ export default function App(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
-  }
+    backgroundColor: "#fff",
+  },
 });
