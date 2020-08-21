@@ -14,13 +14,9 @@ export type FavoriteActionT = {
   id: string;
 };
 
-// // Alternative:
-// fetch('https://picsum.photos/v2/list?page=1&limit=100')
-//   .then(response => response.json())
-//   .then(data => setData(data));
 const fetchData = async (): Promise<ReadonlyArray<ItemT>> => {
   const response = await fetch(
-    "https://picsum.photos/v2/list?page=1&limit=100"
+    "https://picsum.photos/v2/list?page=3&limit=100"
   );
   return response.json();
 };

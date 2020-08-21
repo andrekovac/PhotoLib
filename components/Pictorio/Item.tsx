@@ -1,9 +1,9 @@
-import React, {Dispatch} from "react";
+import React, { Dispatch } from "react";
 import { StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
 import TabBarIcon from "../TabBarIcon";
-import { toggleFavorite, FavoriteActionT } from "../../store/actionCreators/photos";
+import { useFavorites } from "../../store/hooks";
 
 export interface ItemT {
   id: string;
@@ -16,7 +16,7 @@ export interface ItemT {
  * A single image
  */
 const Item = ({ id, author, download_url, isFavorite }: ItemT) => {
-  const dispatch = useDispatch<Dispatch<FavoriteActionT>>();
+  const [_, toggleFavorites] = useFavorites();
 
   return (
     <TouchableOpacity
@@ -30,10 +30,10 @@ const Item = ({ id, author, download_url, isFavorite }: ItemT) => {
         source={{ uri: download_url }}
       />
       <TouchableOpacity
-      style={styles.favoriteButton}
-        onPress={() => dispatch(toggleFavorite(id))}
+        style={styles.favoriteButton}
+        onPress={() => toggleFavorites(id)}
       >
-        <TabBarIcon name={`md-star${isFavorite ? "" : "-outline"}`} />
+        <TabBarIcon name={`md-star${isFavorite ? "" : "-outline"}`} isFavoritesIcon />
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -44,12 +44,11 @@ export default Item;
 const styles = StyleSheet.create({
   item: {
     marginVertical: 8,
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   favoriteButton: {
     position: "absolute",
     right: 0,
-    color: "white",
-    padding: 10
-  }
+    padding: 10,
+  },
 });

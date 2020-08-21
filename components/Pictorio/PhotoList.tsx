@@ -4,7 +4,7 @@ import { FlatList } from "react-native";
 import Item, { ItemT } from "./Item";
 
 interface PropsT {
-  data: ReadonlyArray<any>,
+  data: ReadonlyArray<ItemT>,
 }
 
 const PhotoList = ({ data }: PropsT) => {
