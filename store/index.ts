@@ -1,21 +1,14 @@
-import { applyMiddleware, createStore, compose } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk, { ThunkMiddleware } from "redux-thunk";
 
 import { rootReducer, StoreT } from "./reducer";
 import { ActionT } from "./actionCreators";
 
-const devtools = () =>
-  __DEV__ &&
-  // @ts-ignore
-  window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  // @ts-ignore
-  window.__REDUX_DEVTOOLS_EXTENSION__();
-
 const store = createStore(
   rootReducer,
-  compose(
+  composeWithDevTools(
     applyMiddleware(thunk as ThunkMiddleware<StoreT, ActionT>),
-    devtools()
   )
 );
 
