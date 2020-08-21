@@ -6,6 +6,13 @@ import { rootReducer, StoreT } from "./reducer";
 import { ActionT } from "./actionCreators";
 import fetchSaga from './saga';
 
+const devtools = () =>
+  __DEV__ &&
+  // @ts-ignore
+  window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  // @ts-ignore
+  window.__REDUX_DEVTOOLS_EXTENSION__();
+
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,7 +23,8 @@ const middlewares = [
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(...middlewares)
+  applyMiddleware(...middlewares),
+  devtools()
 );
 
 // then run the saga
