@@ -1,17 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { ItemT } from "../components/Pictorio/Item";
+import { RootStateT } from "./slices/index";
+import {
+  favoritesSelector,
+  toggleFavorite as toggleFavoriteAction,
+  ToggleFavoritesAction,
+  PhotosT,
+} from "./slices/photos";
 
-import { StoreT } from "./reducer";
-import { toggleFavorite } from "./actionCreators/photos";
-
-export const useFavorites = () => {
+export const useFavorites = (): [PhotosT, (id: string) => ToggleFavoritesAction] => {
   const dispatch = useDispatch();
 
-  const favorites = useSelector<StoreT, ReadonlyArray<ItemT>>(state =>
-    state.photos.filter(photo => photo.isFavorite)
-  );
-  const setToggleFavorite = (id: string) => dispatch(toggleFavorite(id));
+  const favorites = useSelector<RootStateT, PhotosT>(favoritesSelector);
+  const toggleFavorite = (id: string) => dispatch(toggleFavoriteAction(id));
 
-  return [favorites, setToggleFavorite];
+  return [favorites, toggleFavorite];
 };
