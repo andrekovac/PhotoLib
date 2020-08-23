@@ -5,13 +5,13 @@ import {
   favoritesSelector,
   toggleFavorite as toggleFavoriteAction,
   ToggleFavoritesAction,
-  PhotosT,
+  PhotosDataT,
 } from "./slices/photos";
 
-export const useFavorites = (): [PhotosT, (id: string) => ToggleFavoritesAction] => {
+export const useFavorites = (): [PhotosDataT, (id: string) => ToggleFavoritesAction] => {
   const dispatch = useDispatch();
 
-  const favorites = useSelector<RootStateT, PhotosT>(favoritesSelector);
+  const favorites = useSelector<RootStateT, PhotosDataT>(favoritesSelector);
   const toggleFavorite = (id: string) => dispatch(toggleFavoriteAction(id));
 
   return [favorites, toggleFavorite];

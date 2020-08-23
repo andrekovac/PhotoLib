@@ -2,10 +2,9 @@ import React from "react";
 import { FlatList } from "react-native";
 
 import Item, { ItemT } from "./Item";
-import { PhotosT } from "../../store/slices/photos";
 
 interface PropsT {
-  data: PhotosT;
+  data: ReadonlyArray<ItemT>;
 }
 
 const PhotoList = ({ data }: PropsT) => {

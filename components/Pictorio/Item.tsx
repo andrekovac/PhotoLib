@@ -1,6 +1,5 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import { StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
-import { useDispatch } from "react-redux";
 
 import TabBarIcon from "../TabBarIcon";
 import { useFavorites } from "../../store/hooks";

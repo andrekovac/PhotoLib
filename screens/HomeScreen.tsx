@@ -1,12 +1,11 @@
 import React, { useEffect, Dispatch } from "react";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchPhotos, photosSelector } from "../store/slices/photos";
+import { fetchPhotos, photosSelector, PhotosT } from "../store/slices/photos";
 
 import PhotoList from "../components/Pictorio/PhotoList";
 import { RootStateT } from "../store/slices";
-import { ItemT } from "../components/Pictorio/Item";
 
 /**
  * Fetch and display random photos
@@ -18,9 +17,13 @@ const HomeScreen = () => {
     dispatch(fetchPhotos());
   }, []);
 
-  const data = useSelector<RootStateT, ReadonlyArray<ItemT>>(photosSelector);
+  const { data, isLoading } = useSelector<RootStateT, PhotosT>(photosSelector);
 
-  return (
+  return isLoading ? (
+    <View style={styles.centered}>
+      <ActivityIndicator size="large" />
+    </View>
+  ) : (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
         <PhotoList data={data} />
@@ -32,6 +35,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
+  },
+  centered: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,45 +1,60 @@
 import {
+  createSelector,
   createSlice,
+  PayloadAction,
   ThunkAction,
   ThunkDispatch,
-  PayloadAction,
-  Action,
 } from "@reduxjs/toolkit";
 
 import { RootStateT } from "./index";
 import { ItemT } from "../../components/Pictorio/Item";
 
-
-export type PhotosT = ReadonlyArray<ItemT>;
-export type AddPhotosAction = PayloadAction<ReadonlyArray<ItemT>>;
+export type PhotosDataT = ReadonlyArray<ItemT>
+export type PhotosT = {
+  data: PhotosDataT;
+  error?: Error;
+  isLoading: boolean;
+};
+export type AddPhotosAction = PayloadAction<PhotosDataT>;
 export type ToggleFavoritesAction = PayloadAction<string>;
 export type PhotosThunkAction = ThunkAction<
-Promise<void>,
-RootStateT,
-undefined,
-AddPhotosAction
+  Promise<void>,
+  RootStateT,
+  undefined,
+  AddPhotosAction
 >;
 export type PhotosThunkDispatch = ThunkDispatch<
-RootStateT,
-undefined,
-AddPhotosAction
+  RootStateT,
+  undefined,
+  AddPhotosAction | PayloadAction<Error | undefined>
 >;
 
-const initialState: PhotosT = [];
+const initialState: PhotosT = {
+  data: [],
+  error: undefined,
+  isLoading: false,
+};
 
 const photosSlice = createSlice({
   name: "photos",
   initialState,
   reducers: {
     addPhotos: (state, { payload }: AddPhotosAction) => {
-      state = payload.map((photo) => ({
+      state.data = payload.map((photo) => ({
         ...photo,
         isFavorite: false,
       }));
-      return state;
+      state.isLoading = false;
+    },
+    fetchPhotosStart: (state) => {
+      state.isLoading = true;
+    },
+    fetchPhotosError: (state, { payload }) => {
+      state.error = payload;
+      state.isLoading = false;
     },
     toggleFavorite: (state, { payload }: ToggleFavoritesAction) => {
-      state = state.map((photo) =>
+      state.data = state.data.map((photo) =>
         photo.id === payload
           ? {
               ...photo,
@@ -47,15 +62,19 @@ const photosSlice = createSlice({
             }
           : photo
       );
-      return state;
     },
   },
 });
 
 // Two actions generated from the slice
-export const { addPhotos, toggleFavorite } = photosSlice.actions;
+export const {
+  addPhotos,
+  toggleFavorite,
+  fetchPhotosStart,
+  fetchPhotosError,
+} = photosSlice.actions;
 
-const fetchData = async (): Promise<PhotosT> => {
+const fetchData = async (): Promise<PhotosDataT> => {
   const response = await fetch(
     "https://picsum.photos/v2/list?page=3&limit=100"
   );
@@ -65,18 +84,23 @@ const fetchData = async (): Promise<PhotosT> => {
 export const fetchPhotos = (): PhotosThunkAction => {
   return async (dispatch: PhotosThunkDispatch) => {
     try {
+      dispatch(fetchPhotosStart());
       const photos = await fetchData();
       dispatch(addPhotos(photos));
     } catch (error) {
       console.error("Error fetching photos", error);
+      dispatch(fetchPhotosError(error));
     }
   };
 };
 
-// A selector
-export const photosSelector = (state: RootStateT) => state.photos;
-export const favoritesSelector = (state: RootStateT) =>
-  state.photos.filter((photo) => photo.isFavorite);
+// Photos selector
+export const photosSelector = (state: RootStateT): PhotosT => state.photos;
+
+// Favorites selector which uses reselect (where selector composition is supported)
+export const favoritesSelector = createSelector([photosSelector], (photos) => {
+  return photos.data.filter((photo) => photo.isFavorite);
+});
 
 // The reducer
 export default photosSlice.reducer;
