@@ -1,11 +1,10 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import { StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
-import { useDispatch } from "react-redux";
 
 import TabBarIcon from "../TabBarIcon";
 import { useFavorites } from "../../store/hooks";
 
-export interface ItemT {
+export type ItemT = {
   id: string;
   author: string;
   download_url: string;

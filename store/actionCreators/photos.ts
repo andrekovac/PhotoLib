@@ -28,13 +28,13 @@ const addPhotos = (photos: ReadonlyArray<ItemT>): PhotosActionT => {
   };
 };
 
-export const fetchPhotos = (): ThunkResult<void> => {
+export const fetchPhotos = (): ThunkResult => {
   return dispatch => {
     fetchData().then(photos => dispatch(addPhotos(photos)));
   };
 };
 
-export const toggleFavorite = (id: string) => {
+export const toggleFavorite = (id: string): FavoriteActionT => {
   return {
     type: TOGGLE_FAVORITE,
     id

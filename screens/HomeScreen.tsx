@@ -2,7 +2,8 @@ import React, { useEffect, Dispatch } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { PhotosActionT, fetchPhotos } from "../store/actionCreators/photos";
+import { fetchPhotos } from "../store/actionCreators/photos";
+import { ThunkResult } from "../store/actionCreators";
 import { StoreT } from "../store/reducer";
 
 import PhotoList from "../components/Pictorio/PhotoList";
@@ -12,7 +13,7 @@ import { ItemT } from "../components/Pictorio/Item";
  * Fetch and display random photos
  */
 const HomeScreen = () => {
-  const dispatch = useDispatch<Dispatch<PhotosActionT>>();
+  const dispatch = useDispatch<Dispatch<ThunkResult>>();
 
   useEffect(() => {
     dispatch(fetchPhotos());

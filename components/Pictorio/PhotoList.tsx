@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { FlatList } from "react-native";
 
 import Item, { ItemT } from "./Item";
@@ -7,7 +7,7 @@ interface PropsT {
   data: ReadonlyArray<ItemT>,
 }
 
-const PhotoList = ({ data }: PropsT) => {
+const PhotoList: FunctionComponent<PropsT> = ({ data }) => {
   return (
     <FlatList
       data={data}
